@@ -19,7 +19,8 @@ def page_index():
 
 @main_blueprint.route("/posts/<int:postid>")
 def page_post_page_with_comments(postid):
-    # logging.info("Запрошена главная страница")
+    # logging.info("Запрошена полная страница поста по идентификатору поста
+    # с комментариями")
     posts_manager = PostsManager(POST_PATH, COMMENTS_PATH)
     post_data = posts_manager.get_post_by_pk(postid)
     post_comments = posts_manager.get_comments_by_post_id(postid)
@@ -32,6 +33,7 @@ def page_post_page_with_comments(postid):
 
 @main_blueprint.route("/search")
 def page_search():
+    # logging.info("Запрошена лента с постами по вхождению поискового термина")
     search_term = request.values.get("q")
     posts_manager = PostsManager(POST_PATH, COMMENTS_PATH)
     search_output = posts_manager.search_for_posts(search_term)
@@ -47,34 +49,9 @@ def page_search():
 
 @main_blueprint.route("/users/<username>")
 def page_posts_by_user(username):
+    # logging.info("Запрошена лента с постами пользователя")
     posts_manager = PostsManager(POST_PATH, COMMENTS_PATH)
     user_posts = posts_manager.get_posts_by_user(username)
 
     return render_template("user-feed.html", user_posts=user_posts)
 
-
-
-
-
-
-# # страница с результатами поиска по части слова, отображает список публикаций
-# @main_blueprint.route("/search")
-# def page_search():
-#     s = request.args.get("s")
-#     post_manager = PostsManager(POST_PATH)
-#     # logging.info("Поиск выполняется")
-#
-#     search_result = post_manager.search_for_posts(s)
-#
-#     if not search_result:
-#         return "Публикации по вашему выбору не найдено"
-#
-#     return render_template("post_list.html", search_result=search_result, s=s)
-
-
-
-# <form action ="search">
-#
-#     <input type="text" name="search_input" placeholder="Начните поиск">
-#    <input type="submit" value="Найти">
-# </form>

@@ -1,7 +1,7 @@
-class DataWriteError(Exception):
+class NoFilePathPosts(Exception):
     pass
 
 
-class PictureTypeError(Exception):
+class NoFilePathComments(Exception):
     pass
 
